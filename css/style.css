@@ -41,6 +41,9 @@ canvas {
 .container > hr {
     margin: 60px 0;
 }
+hr {
+    border-color: #ddd;
+}
 .jumbotron h1 {
     font-size: 48pt;
     line-height: 44pt;
@@ -111,13 +114,14 @@ nav#main h1 {
     display: inline-block;
     color: #000;
     font-size: 38pt;
-    font-family: "Lato";
-    font-weight: 300;
+    font-family: "Open Sans";
+    font-weight: 800;
     height: 44pt;
     line-height: 44pt;
     margin: 0 0 44pt 0;
     text-shadow: 0 3px 0 rgba(0,0,0,0.15);
     -webkit-transition: all 1s;
+    letter-spacing: -2px;
 }
 nav#main h1:hover {
     color: #fff;
@@ -234,12 +238,12 @@ body.blue       .reading-nav:hover { background: #3984F9; }
     padding: 40px;
 }
 nav#main.slide-in, aside.extra.slide-in {
-    z-index: 2;
-    margin-left: -50%;
+    /*z-index: 2;*/
+    margin-left: -100%;
     opacity: 0;
 }
 aside.extra.slide-i {
-    z-index: 1;
+    /*z-index: 1;*/
 }
 body.show-reading-nav #btn-show-menu.reading-nav {
     top: 0;
