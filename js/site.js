@@ -1,48 +1,124 @@
-var render = function() {
-	var canvas = document.getElementById('canvas'),
-	context = canvas.getContext('2d'),
-	canvasWidth = canvas.width = window.innerWidth,
-	canvasHeight = canvas.height = window.innerHeight,  
-	cellWidth = 40,
-	cellHeight = 40,
-	columns = Math.ceil(canvasWidth / cellWidth),
-	rows = Math.ceil(canvasHeight / cellHeight),
-	rand = function(min, max){
-		return Math.floor( (Math.random() * (max - min + 1) ) + min);
-	}, iCol, iRow;
-	context.clearRect(0, 0, canvasWidth, canvasHeight);
+var Triangle = function(x, y, width, height, pattern, lightness, background) {
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.pattern = pattern;
+    this.lightness = lightness;
+    this.background = background;
+};
 
-	for(iCol = 0; iCol < columns; iCol++) {
-		for(iRow = 0; iRow < rows; iRow++) {	      
-		var pattern = rand(0, 3);
-		var lightness = rand(92, 100);       
-		context.beginPath();      
-		if(pattern === 0){
-			context.moveTo(iCol * cellWidth, iRow * cellHeight);      
-			context.lineTo(iCol * cellWidth + cellWidth, iRow * cellHeight);
-			context.lineTo(iCol * cellWidth, iRow * cellHeight + cellHeight);
-		} else if(pattern === 1){
-			context.moveTo(iCol * cellWidth + cellWidth, iRow * cellHeight);      
-			context.lineTo(iCol * cellWidth + cellWidth, iRow * cellHeight + cellHeight);
-			context.lineTo(iCol * cellWidth, iRow * cellHeight);
-		} else if(pattern === 2){
-			context.moveTo(iCol * cellWidth + cellWidth, iRow * cellHeight + cellHeight);      
-			context.lineTo(iCol * cellWidth, iRow * cellHeight + cellHeight);
-			context.lineTo(iCol * cellWidth + cellWidth, iRow * cellHeight);
-		} else {
-			context.moveTo(iCol * cellWidth, iRow * cellHeight + cellHeight);      
-			context.lineTo(iCol * cellWidth, iRow * cellHeight);
-			context.lineTo(iCol * cellWidth + cellWidth, iRow * cellHeight + cellHeight);
-		}
-		context.fillStyle = 'hsl(0, 0%, '+lightness+'%)';      
-		context.closePath();		
-			context.fill();
-		};
-	};
+Triangle.prototype = {
+    draw: function(context) {  
+        if(this.pattern === 0) {
+            context.beginPath();
+            context.moveTo(this.x * this.width,              this.y * this.height);      
+            context.lineTo(this.x * this.width + this.width, this.y * this.height);
+            context.lineTo(this.x * this.width,              this.y * this.height + this.height);
+            context.fillStyle = "hsl(0, 0%, " + this.lightness + "%)"; 
+            context.closePath();		
+            context.fill();
+            
+            context.beginPath();
+            context.moveTo(this.x * this.width + this.width, this.y * this.height + this.height);      
+            context.lineTo(this.x * this.width,              this.y * this.height + this.height);
+            context.lineTo(this.x * this.width + this.width, this.y * this.height);
+            context.fillStyle = "hsl(0, 0%, 98%)";
+            context.closePath();		
+            context.fill();
+        } else if(this.pattern === 1) {
+            context.beginPath();
+            context.moveTo(this.x * this.width + this.width, this.y * this.height);      
+            context.lineTo(this.x * this.width + this.width, this.y * this.height + this.height);
+            context.lineTo(this.x * this.width,              this.y * this.height);
+            context.fillStyle = "hsl(0, 0%, " + this.lightness + "%)";    
+            context.closePath();		
+            context.fill();
+            
+            context.beginPath();
+            context.moveTo(this.x * this.width,              this.y * this.height + this.height);      
+            context.lineTo(this.x * this.width,              this.y * this.height);
+            context.lineTo(this.x * this.width + this.width, this.y * this.height + this.height);
+            context.fillStyle = "hsl(0, 0%, 98%)";   
+            context.closePath();		
+            context.fill();
+        } else if(this.pattern === 2) {
+            context.beginPath();
+            context.moveTo(this.x * this.width + this.width, this.y * this.height + this.height);      
+            context.lineTo(this.x * this.width,              this.y * this.height + this.height);
+            context.lineTo(this.x * this.width + this.width, this.y * this.height);
+            context.fillStyle = "hsl(0, 0%, " + this.lightness + "%)";    
+            context.closePath();		
+            context.fill();
+            
+            context.beginPath();
+            context.moveTo(this.x * this.width,              this.y * this.height);      
+            context.lineTo(this.x * this.width + this.width, this.y * this.height);
+            context.lineTo(this.x * this.width,              this.y * this.height + this.height);
+            context.fillStyle = "hsl(0, 0%, 98%)"; 
+            context.closePath();		
+            context.fill();
+        } else {
+            context.beginPath();
+            context.moveTo(this.x * this.width,              this.y * this.height + this.height);      
+            context.lineTo(this.x * this.width,              this.y * this.height);
+            context.lineTo(this.x * this.width + this.width, this.y * this.height + this.height);
+            context.fillStyle = "hsl(0, 0%, " + this.lightness + "%)";    
+            context.closePath();		
+            context.fill();
+            
+            context.beginPath();
+            context.moveTo(this.x * this.width + this.width, this.y * this.height);      
+            context.lineTo(this.x * this.width + this.width, this.y * this.height + this.height);
+            context.lineTo(this.x * this.width,              this.y * this.height);
+            context.fillStyle = "hsl(0, 0%, 98%)";    
+            context.closePath();		
+            context.fill();
+        }  
+    }
+};
+
+var Triangles = function(el, background) {
+    this.canvas = document.getElementById(el);
+    this.context = this.canvas.getContext("2d");
+    this.background = background;
+    this.triangles = [];
+};
+
+Triangles.prototype = {
+    createTriangles: function(size, brightness) {
+        var canvasWidth = this.canvas.width = window.innerWidth;
+        var canvasHeight = this.canvas.height = window.innerHeight;  
+        var cellWidth = size[0];
+        var cellHeight = size[1];
+        var columns = Math.ceil(canvasWidth / cellWidth);
+        var rows = Math.ceil(canvasHeight / cellHeight);
+        
+        var rand = function(min, max) { 
+            return Math.floor((Math.random() * (max - min + 1) ) + min); 
+        };
+
+        for(var x = 0; x < columns; x++) {
+            for(var y = 0; y < rows; y++) {
+                var pattern = rand(0, 3);
+                var lightness = rand(brightness[0], brightness[1]);
+                this.triangles.push(new Triangle(x, y, cellWidth, cellHeight, pattern, lightness, this.background));
+            }
+        }
+    },
+    draw: function() {
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        for(var i = 0; i < this.triangles.length; i++) {
+            this.triangles[i].draw(this.context);
+        }
+    }
 };
 
 $(document).ready(function() {
-    render();
+    var triangles = new Triangles("background-canvas", "#fafafa");
+    triangles.createTriangles([40, 40], [92, 100]);
+    triangles.draw();
+    
     var $body = $("body");
     var $nav = $("#main");
     var $content = $(".content-wrapper");

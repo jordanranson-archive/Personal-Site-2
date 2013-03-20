@@ -1,10 +1,10 @@
-html, body { overflow: hidden; }
-
+html, body { 
+    overflow: hidden; 
+}
 body {
     background: #fafafa;
     text-shadow: 0 2px 0 #fff;
 }
-
 h1, h2, h3, h4, h5 {
     color: #000;
     font-family: "Open Sans", sans-serif;
