@@ -586,6 +586,30 @@
     <Compile Include="wordpress\wp-content\plugins\index.php">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="wordpress\wp-content\themes\blankslate\404.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="wordpress\wp-content\themes\blankslate\functions.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="wordpress\wp-content\themes\blankslate\index.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="wordpress\wp-content\themes\blankslate\latest.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="wordpress\wp-content\themes\blankslate\menu.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="wordpress\wp-content\themes\blankslate\search.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="wordpress\wp-content\themes\blankslate\sidebar.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="wordpress\wp-content\themes\blankslate\single.php">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="wordpress\wp-content\themes\index.php">
       <SubType>Code</SubType>
     </Compile>
@@ -1860,6 +1884,66 @@
     <Content Include="wordpress\wp-content\plugins\akismet\readme.txt">
       <SubType>Content</SubType>
     </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\css\bootstrap-responsive.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\css\bootstrap-responsive.min.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\css\bootstrap.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\css\bootstrap.min.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\css\font-awesome-ie7.min.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\css\font-awesome.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\css\font-awesome.min.css">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\font\fontawesome-webfont.eot">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\font\fontawesome-webfont.svg">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\font\fontawesome-webfont.ttf">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\font\fontawesome-webfont.woff">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\font\FontAwesome.otf">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\js\bootstrap.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\js\bootstrap.min.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\js\jquery-1.9.1.min.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\js\less-1.3.0.min.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\js\site.js">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\readme.txt">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\screenshot.png">
+      <SubType>Content</SubType>
+    </Content>
+    <Content Include="wordpress\wp-content\themes\blankslate\style.css">
+      <SubType>Content</SubType>
+    </Content>
     <Content Include="wordpress\wp-content\themes\twentyeleven\colors\dark.css">
       <SubType>Content</SubType>
     </Content>
@@ -3115,6 +3199,11 @@
     <Folder Include="wordpress\wp-content\plugins\" />
     <Folder Include="wordpress\wp-content\plugins\akismet\" />
     <Folder Include="wordpress\wp-content\themes\" />
+    <Folder Include="wordpress\wp-content\themes\blankslate\" />
+    <Folder Include="wordpress\wp-content\themes\blankslate\css\" />
+    <Folder Include="wordpress\wp-content\themes\blankslate\font\" />
+    <Folder Include="wordpress\wp-content\themes\blankslate\js\" />
+    <Folder Include="wordpress\wp-content\themes\blankslate\languages\" />
     <Folder Include="wordpress\wp-content\themes\twentyeleven\" />
     <Folder Include="wordpress\wp-content\themes\twentyeleven\colors\" />
     <Folder Include="wordpress\wp-content\themes\twentyeleven\images\" />

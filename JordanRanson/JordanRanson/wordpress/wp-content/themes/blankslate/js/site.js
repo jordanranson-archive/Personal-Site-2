@@ -115,7 +115,8 @@ Triangles.prototype = {
 };
 
 
-jQuery(document).ready(function($) {
+jQuery(document).ready(function ($) {
+    var page = "";
     var triangles = new Triangles("background-canvas", "#fafafa");
     triangles.createTriangles([40, 40], [92, 100]);
     triangles.draw();
@@ -124,18 +125,60 @@ jQuery(document).ready(function($) {
     var $nav = $("#main");
     var $content = $(".content-wrapper");
     var $search = $("#search");
+    var $loading = $("#loading");
     var $overlay = $(".overlay");
     var $close = $("#btn-close");
+    var $container = $("#container");
     
     $nav.find("a").click(function(e) {
         e.preventDefault();
+
+        // Change the accent colors
         $body.attr("class", "");
-        $body.addClass("show-reading-nav");
-        $body.addClass($(this).data("color"));
-        $nav.addClass("slide-in");
-        $content.addClass("show");
-        $overlay.fadeOut(1000);
-        
+        $body.addClass($(this).attr("title")); // TODO: make not suck
+
+        var url = $(this).attr("href");
+        if (page !== url) {
+            // Hide menu, show loader
+            $container.fadeOut("fast");
+            $nav.addClass("slide-in");
+            setTimeout(function () {
+                var waitForLoader = false;
+                var loaderDur = 500;
+                var loaderingTimeout = setTimeout(function () {
+                    $loading.removeClass("slide-in");
+                    waitForLoader = true;
+                    setTimeout(function () {
+                        waitForLoader = false;
+                    }, loaderDur);
+                }, loaderDur);
+
+                $.ajax({
+                    url: url,
+                    success: function (result) {
+                        // Show content
+                        page = url;
+                        clearTimeout(loaderingTimeout);
+                        setTimeout(function () {
+                            $container.html(result);
+                            $loading.addClass("slide-in");
+                            $body.addClass("show-reading-nav");
+                            $overlay.fadeOut(1000);
+                            $container.fadeIn("fast");
+                            $content.addClass("show");
+                        }, waitForLoader ? loaderDur : 0)
+                    },
+                    error: function (xhr, status, error) {
+                        console.log(status, error);
+                    }
+                });
+            }, 200);
+        } else {
+            $nav.addClass("slide-in");
+            $body.addClass("show-reading-nav");
+            $overlay.fadeOut(1000);
+            $content.addClass("show");
+        }
     });
     
     $("#btn-close").click(function(e) {

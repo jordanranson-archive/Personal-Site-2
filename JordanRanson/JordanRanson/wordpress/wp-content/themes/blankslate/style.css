@@ -15,11 +15,24 @@ html, body {
 body {
     background: #fafafa;
     text-shadow: 0 2px 0 #fff;
+    font-size: 12pt;
+}
+body.red a  { 
+    color: #F93658; 
+}
+body.yellow a { 
+    color: #FCC439; 
+}
+body.green a { 
+    color: #62C187; 
+}
+body.blue a { 
+    color: #3984F9; 
 }
 h1, h2, h3, h4, h5 {
     color: #000;
-    font-family: "Open Sans", sans-serif;
-    font-weight: 800;
+    font-family: "Titillium Web", sans-serif;
+    font-weight: 600;
     text-transform: uppercase;
 }
 canvas {
@@ -96,7 +109,7 @@ hr {
     width: 100%;
     height: 100%;
     overflow-x: hidden;
-    overflow-y: auto;
+    overflow-y: hidden;
 }
 
 /* Main nav#mainigation/extra content pane */
@@ -124,14 +137,14 @@ nav#main h1 {
     display: inline-block;
     color: #000;
     font-size: 38pt;
-    font-family: "Open Sans";
-    font-weight: 800;
+    font-family: "Titillium Web";
+    font-weight: 600;
     height: 44pt;
     line-height: 44pt;
     margin: 0 0 44pt 0;
     text-shadow: 0 3px 0 rgba(0,0,0,0.15);
     -webkit-transition: all 1s;
-    letter-spacing: -2px;
+    white-space: nowrap;
 }
 nav#main h1:hover {
     color: #fff;
@@ -151,10 +164,9 @@ nav#main li a {
     height: 44pt;
     line-height: 44pt;
     padding: 0 0.3em;
-    font-family: "Lato";
-    font-weight: 300;
+    font-family: "Titillium Web";
+    font-weight: 200;
     text-transform: uppercase;
-    letter-spacing: -2px;
     background-color: #ddd;
     color: #fff;
     text-shadow: 0 -2px 0 rgba(0,0,0,0.1);
@@ -170,14 +182,29 @@ nav#main li a:hover {
     text-shadow: 0 -2px 0 rgba(0,0,0,0.2);
     text-decoration: none;
 }
-nav#main li:nth-child(1) a:hover {
+nav#main li:nth-child(3) a:hover {
     background-color: #FCC439; /* yellow */
 }
 nav#main li:nth-child(2) a:hover {
     background-color: #3984F9; /* blue */
 }
-nav#main li:nth-child(3) a:hover {
+nav#main li:nth-child(1) a:hover {
     background-color: #62C187; /* green */
+}
+.loading {
+    position: absolute;
+    height: 500px;
+    top: 50%; right: 15%;
+    bottom: auto;
+    width: 55%;
+    margin: -250px 0 0 0;
+    z-index: 100;
+    -webkit-transition-property: margin opacity;
+    -webkit-transition-duration: 1s;
+
+    font-size: 72pt;
+    text-align: center;
+    line-height: 500px;
 }
 
 /* Reading buttons */
@@ -193,17 +220,19 @@ nav#main li:nth-child(3) a:hover {
     text-align: center;
     padding: 7px;
     background: #ddd;
+    opacity: 0.6;
     z-index: 150;
     -webkit-transition: all 333ms;
 }
 .reading-nav:hover {
     text-shadow: 0 -2px 0 rgba(0,0,0,0.2);
     padding: 15px;
+    opacity: 1;
 }
-body.red         .reading-nav:hover { background: #F93658; }
+body.red       .reading-nav:hover { background: #F93658; }
 body.yellow    .reading-nav:hover { background: #FCC439; }
 body.green     .reading-nav:hover { background: #62C187; }
-body.blue       .reading-nav:hover { background: #3984F9; }
+body.blue      .reading-nav:hover { background: #3984F9; }
 
 #btn-show-menu.reading-nav {
     top: -112px;
@@ -244,6 +273,9 @@ body.blue       .reading-nav:hover { background: #3984F9; }
     opacity: 1;
     -webkit-filter: blur(0px);
 }
+.content-wrapper.show .content-container {
+    overflow-y: auto;
+}
 .content-wrapper.show .container {
     padding: 40px;
 }
@@ -252,8 +284,13 @@ nav#main.slide-in, aside.extra.slide-in {
     margin-left: -100%;
     opacity: 0;
 }
-aside.extra.slide-i {
+aside.extra.slide-in {
     /*z-index: 1;*/
+}
+.loading.slide-in {
+    /*z-index: 2;*/
+    margin-right: -100%;
+    opacity: 0;
 }
 body.show-reading-nav #btn-show-menu.reading-nav {
     top: 0;
@@ -267,14 +304,56 @@ body.show-reading-nav #btn-search.reading-nav {
     top: 0;
     right: 0;
 }
+.page-title h1 {
+    font-size: 48pt;
+    line-height: 1em;
+    padding-bottom: 20px;
+    margin-bottom: 40px;
+    border-bottom: solid 4px #ddd;
+}
 
 /* Page content */
+.latest-posts .post {
+    margin: 0 0 40px 0;
+}
+.latest-posts .date-tag {
+    text-align: center;
+    padding-top: 10px;
+}
+.latest-posts .date-tag div:first-child {
+    font: 200 20pt "Titillium Web";
+    text-transform: uppercase;
+    line-height: 1.1em;
+}
+.latest-posts .date-tag div:last-child {
+    font: 600 40pt "Titillium Web";
+    line-height: 1;
+}
 .post {
+    line-height: 1.5em;
 }
 .post h1 {
     font-size: 26pt;
     line-height: 26pt;
 }
+.post h1 a {
+    color: #000;
+}
+.post h1 a:hover {
+
+}
+/*body.red .post h1 a:hover { 
+    color: #F93658; 
+}
+body.yellow .post h1 a:hover { 
+    color: #FCC439; 
+}
+body.green .post h1 a:hover {
+     color: #62C187; 
+}
+body.blue .post h1 a:hover { 
+    color: #3984F9; 
+}*/
 .post-featured {
     box-sizing: border-box;
     padding: 20px;
@@ -294,6 +373,35 @@ body.show-reading-nav #btn-search.reading-nav {
     font-size: 13pt;
     line-height: 1.3em;
 }
+.post .tag {
+    padding: 2px 4px;
+    color: #fff;
+    background: #ddd;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.2);
+    margin: 0 5px 0 0;
+    font-size: 8pt;
+    text-transform: uppercase; 
+    transition: background-color 166ms;
+    -webkit-transition: background-color 166ms;
+    -moz-transition: background-color 166ms;
+    -ms-transition: background-color 166ms;
+    white-space: nowrap;
+}
+.post .tag {
+    text-decoration: none;
+}
+body.red .tag { 
+    background: #F93658; 
+}
+body.yellow .tag { 
+    background: #FCC439; 
+}
+body.green .tag { 
+    background: #62C187; 
+}
+body.blue .tag { 
+    background: #3984F9; 
+}
 
 /* Large desktop */
 @media (min-width: 1200px) { 
@@ -304,10 +412,23 @@ body.show-reading-nav #btn-search.reading-nav {
 
 }
 /* Landscape phone to portrait tablet */
-@media (max-width: 767px) { 
-
+@media (max-width: 767px) {
+    .latest-posts .date-tag {
+        text-align: left;
+        padding-top: 0;
+        line-height: 1;
+    }
+    .latest-posts .date-tag div:first-child {
+        display: inline;
+        line-height: 1;
+    }
+    .latest-posts .date-tag div:last-child {
+        font: 200 20pt "Titillium Web";
+        display: inline;
+        line-height: 1;
+    }
 }
 /* Landscape phones and down */
-@media (max-width: 480px) { 
-    
+@media (max-width: 480px) {
+
 }
