@@ -40,7 +40,7 @@ Template Name: Latest
         </div>
         <div class="span10 post">
             <header>
-                <h1><a href=""><?php echo $i_post["post_title"] ?></a></h1>
+                <h1><a href="<?php echo get_permalink($i_post["ID"]); ?>?post_id=<?php echo $i_post["ID"]; ?>" class="post-link"><?php echo $i_post["post_title"] ?></a></h1>
             </header>
             <article>
 	            <?php //echo $i_post["post_excerpt"] ?>

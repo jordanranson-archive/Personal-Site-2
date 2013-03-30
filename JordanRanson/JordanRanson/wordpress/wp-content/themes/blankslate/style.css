@@ -403,6 +403,38 @@ body.blue .tag {
     background: #3984F9; 
 }
 
+/* Single post styles */
+.post-single header {
+    margin-top: -20px;
+}
+.post-single header h2 {
+    font: 200 24pt "Titillium Web";
+    margin: 0;
+}
+.post-single article {
+    font-size: 13pt;
+    margin: 40px 0;
+    line-height: 1.5em;
+}
+.post-single article a {
+    font-weight: bold;
+}
+.post-single footer {
+}
+.post-single .tag {
+    font: 200 13pt "Titillium Web";
+    margin: 0 8px 8px 0;
+    padding: 2px 8px;
+    display: inline-block;
+    transition: padding 166ms;
+    -webkit-transition: padding 166ms;
+    -moz-transition: padding 166ms;
+    -ms-transition: padding 166ms;
+}
+.post-single .excerpt {
+    opacity: 0.8;
+    font-style: italic;
+}
 /* Large desktop */
 @media (min-width: 1200px) { 
 

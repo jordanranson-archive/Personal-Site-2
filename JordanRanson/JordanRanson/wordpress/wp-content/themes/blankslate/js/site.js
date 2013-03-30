@@ -114,9 +114,8 @@ Triangles.prototype = {
     }
 };
 
-
+var page = "";
 jQuery(document).ready(function ($) {
-    var page = "";
     var triangles = new Triangles("background-canvas", "#fafafa");
     triangles.createTriangles([40, 40], [92, 100]);
     triangles.draw();
@@ -129,15 +128,9 @@ jQuery(document).ready(function ($) {
     var $overlay = $(".overlay");
     var $close = $("#btn-close");
     var $container = $("#container");
-    
-    $nav.find("a").click(function(e) {
-        e.preventDefault();
 
-        // Change the accent colors
-        $body.attr("class", "");
-        $body.addClass($(this).attr("title")); // TODO: make not suck
-
-        var url = $(this).attr("href");
+    var loadPage = function loadPage(_this, onSuccess) {
+        var url = $(_this).attr("href");
         if (page !== url) {
             // Hide menu, show loader
             $container.fadeOut("fast");
@@ -162,10 +155,10 @@ jQuery(document).ready(function ($) {
                         setTimeout(function () {
                             $container.html(result);
                             $loading.addClass("slide-in");
-                            $body.addClass("show-reading-nav");
                             $overlay.fadeOut(1000);
                             $container.fadeIn("fast");
                             $content.addClass("show");
+                            onSuccess();
                         }, waitForLoader ? loaderDur : 0)
                     },
                     error: function (xhr, status, error) {
@@ -179,6 +172,26 @@ jQuery(document).ready(function ($) {
             $overlay.fadeOut(1000);
             $content.addClass("show");
         }
+    };
+    
+    $nav.find("a").click(function(e) {
+        e.preventDefault();
+
+        // Change the accent colors
+        $body.attr("class", "");
+        $body.addClass($(this).attr("title")); // TODO: make not suck
+
+        loadPage(this, function () {
+            $body.addClass("show-reading-nav");
+        });
+    });
+
+    $container.delegate("a.post-link", "click", function (e) {
+        e.preventDefault();
+
+        $body.removeClass("show-reading-nav");
+
+        loadPage(this, function () { });
     });
     
     $("#btn-close").click(function(e) {
