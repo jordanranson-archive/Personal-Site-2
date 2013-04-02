@@ -119,7 +119,9 @@ jQuery(document).ready(function ($) {
     var triangles = new Triangles("background-canvas", "#fafafa");
     triangles.createTriangles([40, 40], [92, 100]);
     triangles.draw();
-    
+
+    page = document.URL + window.state.query;
+
     var $body = $("body");
     var $nav = $("#main");
     var $content = $(".content-wrapper");
@@ -129,11 +131,13 @@ jQuery(document).ready(function ($) {
     var $close = $("#btn-close");
     var $container = $("#container");
 
-    var loadPage = function loadPage(_this, onSuccess) {
-        var url = $(_this).attr("href");
+    $nav.removeClass("no-transitions");
+
+    var loadPage = function loadPage(state, onSuccess) {
+        var url = state.href + state.query;
         if (page !== url) {
             // Hide menu, show loader
-            $container.fadeOut("fast");
+            $container.animate({ "opacity": 0 }, "fast");
             $nav.addClass("slide-in");
             setTimeout(function () {
                 var waitForLoader = false;
@@ -147,7 +151,7 @@ jQuery(document).ready(function ($) {
                 }, loaderDur);
 
                 $.ajax({
-                    url: url,
+                    url: url + "?api=1",
                     success: function (result) {
                         // Show content
                         page = url;
@@ -155,8 +159,8 @@ jQuery(document).ready(function ($) {
                         setTimeout(function () {
                             $container.html(result);
                             $loading.addClass("slide-in");
-                            $overlay.fadeOut(1000);
-                            $container.fadeIn("fast");
+                            $overlay.animate({ "opacity": 0 }, 1000, function () { $(this).hide() });
+                            $container.animate({ "opacity": 1 }, "fast");
                             $content.addClass("show");
                             onSuccess();
                         }, waitForLoader ? loaderDur : 0)
@@ -167,23 +171,74 @@ jQuery(document).ready(function ($) {
                 });
             }, 200);
         } else {
-            $nav.addClass("slide-in");
-            $body.addClass("show-reading-nav");
-            $overlay.fadeOut(1000);
-            $content.addClass("show");
+            showPageContainer();
         }
     };
-    
+
+    window.addEventListener("popstate", function (e) {
+        console.log(e.state);
+        if (e.state === null) {
+            var state = {
+                href: document.location.href,
+                query: window.state.query,
+                depth: window.state.depth,
+                title: document.title,
+                color: window.state.color
+            };
+
+            if (state.depth !== 0) {
+                showPage(state, true);
+            } else {
+                $nav.removeClass("slide-in");
+            }
+
+            history.replaceState(state, document.title, document.location.href);
+        }
+        else {
+            if (e.state.depth === 0) {
+                showMenu();
+            } else {
+                showPage(e.state);
+            }
+        }
+    });
+
+    var showPageContainer = function () {
+        $nav.addClass("slide-in");
+        $body.addClass("show-reading-nav");
+        $overlay.animate({"opacity": 0}, 1000, function() { $(this).hide() });
+        $container.animate({ "opacity": 1 }, "fast");
+        $content.addClass("show");
+    };
+
+    var showPage = function (state, preventLoading) {
+        // Change the accent colors
+        $body.attr("class", "");
+        if (state.color) {
+            $body.addClass(state.color);
+        }
+
+        if (preventLoading) {
+            showPageContainer();
+        } else {
+            loadPage(state, function () {
+                $body.addClass("show-reading-nav");
+            });
+        }
+    };
+
     $nav.find("a").click(function(e) {
         e.preventDefault();
 
-        // Change the accent colors
-        $body.attr("class", "");
-        $body.addClass($(this).attr("title")); // TODO: make not suck
-
-        loadPage(this, function () {
-            $body.addClass("show-reading-nav");
-        });
+        var state = {
+            href: $(this).attr("href"),
+            query: $(this).attr("data-query"),
+            depth: 1,
+            title: $(this).text(),
+            color: $(this).attr("data-color")
+        };
+        showPage(state);
+        history.pushState(state, $(this).text(), $(this).attr("href"));
     });
 
     $container.delegate("a.post-link", "click", function (e) {
@@ -191,7 +246,15 @@ jQuery(document).ready(function ($) {
 
         $body.removeClass("show-reading-nav");
 
-        loadPage(this, function () { });
+        var state = {
+            href: $(this).attr("href"),
+            query: $(this).attr("data-query"),
+            depth: 2,
+            title: $(this).text(),
+            color: window.state.color
+        };
+        history.pushState(state, $(this).text(), $(this).attr("href"));
+        loadPage(state, function () { });
     });
     
     $("#btn-close").click(function(e) {
@@ -199,17 +262,29 @@ jQuery(document).ready(function ($) {
         $body.addClass("show-reading-nav");
         $search.addClass("slide-in");
         $content.addClass("show");
-        $overlay.fadeOut(1000);
+        $overlay.animate({ "opacity": 0 }, 1000, function () { $(this).hide() });
         $close.removeClass("show");
         
     });
     
-    $("#btn-show-menu").click(function(e) {
-        e.preventDefault();
+    var showMenu = function () {
         $body.attr("class", "");
         $nav.removeClass("slide-in");
         $content.removeClass("show");
-        $overlay.fadeIn(1000);
+        $overlay.show(0).animate({ "opacity": 1 }, 1000);
+    };
+
+    $("#btn-show-menu").click(function (e) {
+        e.preventDefault();
+        var state = {
+            href: window.state.baseUrl,
+            query: "",
+            depth: 0,
+            title: window.state.siteTitle,
+            color: ""
+        };
+        history.pushState(state, state.title, state.href);
+        showMenu();
     });
     
     $("#btn-search").click(function(e) {
@@ -217,7 +292,7 @@ jQuery(document).ready(function ($) {
         $body.removeClass("show-reading-nav");
         $search.removeClass("slide-in");
         $content.removeClass("show");
-        $overlay.fadeIn(1000);
+        $overlay.show(0).animate({ "opacity": 1 }, 1000);
         $close.addClass("show");
     });
 });

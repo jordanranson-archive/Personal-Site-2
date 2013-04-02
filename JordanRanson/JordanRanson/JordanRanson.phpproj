@@ -589,7 +589,16 @@
     <Compile Include="wordpress\wp-content\themes\blankslate\404.php">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="wordpress\wp-content\themes\blankslate\footer.php">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="wordpress\wp-content\themes\blankslate\functions.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="wordpress\wp-content\themes\blankslate\header-content.php">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="wordpress\wp-content\themes\blankslate\header-main.php">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="wordpress\wp-content\themes\blankslate\index.php">

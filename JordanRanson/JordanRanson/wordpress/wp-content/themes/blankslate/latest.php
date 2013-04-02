@@ -3,6 +3,11 @@
 Template Name: Latest
  */
 ?>
+
+<?php if(!isset($_GET["api"])) get_header("main"); ?>
+<?php $page_depth = 1; $page_color = "green"; include("script.php"); ?> 
+<?php if(!isset($_GET["api"])) get_header("content"); ?>
+
 <div class="row-fluid page-title">
     <h1>Latest Posts</h1>
 </div>
@@ -40,7 +45,7 @@ Template Name: Latest
         </div>
         <div class="span10 post">
             <header>
-                <h1><a href="<?php echo get_permalink($i_post["ID"]); ?>?post_id=<?php echo $i_post["ID"]; ?>" class="post-link"><?php echo $i_post["post_title"] ?></a></h1>
+                <h1><a href="<?php echo get_permalink($i_post["ID"]); ?>" data-query="?api=1&post_id=<?php echo $i_post["ID"]; ?>" class="post-link"><?php echo $i_post["post_title"] ?></a></h1>
             </header>
             <article>
 	            <?php //echo $i_post["post_excerpt"] ?>
@@ -62,3 +67,5 @@ Template Name: Latest
 <?php endforeach; ?>
     </div>
 </div>
+
+<?php if(!isset($_GET["api"])) get_footer(); ?>

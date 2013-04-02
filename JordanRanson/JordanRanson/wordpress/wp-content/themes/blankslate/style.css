@@ -45,6 +45,12 @@ canvas {
     top: 0; left: 0;
     right: 0; bottom: 0;
 }
+.no-transitions {
+    transition: none 0s !important;
+    -webkit-transition: none 0s !important;
+    -moz-transition: none 0s !important;
+    -ms-transition: none 0s !important;
+}
 
 /*.red { color: #F93658; }
 .yellow { color: #FCC439; }
@@ -58,9 +64,18 @@ canvas {
     padding: 0;
     width: 100%;
     max-width: 1000px;
+    box-sizing: border-box;
+    transition-property: padding;
+    transition-duration: 1s;
     -webkit-box-sizing: border-box;
     -webkit-transition-property: padding;
     -webkit-transition-duration: 1s;
+    -moz-box-sizing: border-box;
+    -moz-transition-property: padding;
+    -moz-transition-duration: 1s;
+    -ms-box-sizing: border-box;
+    -ms-transition-property: padding;
+    -ms-transition-duration: 1s;
 }
 .container > hr {
     margin: 60px 0;
@@ -110,6 +125,9 @@ hr {
     height: 100%;
     overflow-x: hidden;
     overflow-y: hidden;
+}
+#container, .overlay {
+    opacity: 0;
 }
 
 /* Main nav#mainigation/extra content pane */
@@ -182,13 +200,13 @@ nav#main li a:hover {
     text-shadow: 0 -2px 0 rgba(0,0,0,0.2);
     text-decoration: none;
 }
-nav#main li:nth-child(3) a:hover {
+nav#main li a[data-color=yellow]:hover {
     background-color: #FCC439; /* yellow */
 }
-nav#main li:nth-child(2) a:hover {
+nav#main li a[data-color=blue]:hover {
     background-color: #3984F9; /* blue */
 }
-nav#main li:nth-child(1) a:hover {
+nav#main li a[data-color=green]:hover {
     background-color: #62C187; /* green */
 }
 .loading {
@@ -282,7 +300,6 @@ body.blue      .reading-nav:hover { background: #3984F9; }
 nav#main.slide-in, aside.extra.slide-in {
     /*z-index: 2;*/
     margin-left: -100%;
-    opacity: 0;
 }
 aside.extra.slide-in {
     /*z-index: 1;*/
